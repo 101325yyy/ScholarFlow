@@ -1,0 +1,2 @@
+# 保持字节原样：避免 Windows 下 LF→CRLF 转换破坏 SHA256SUMS.txt 的校验结果
+* -text
