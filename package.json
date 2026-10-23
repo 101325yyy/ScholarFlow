@@ -1,0 +1,45 @@
+{
+  "name": "scholarflow-workspace",
+  "version": "1.1.0",
+  "private": true,
+  "description": "ScholarFlow 1.1.0: secure local research workspace, practical help, incremental fixes",
+  "main": "windows/main.cjs",
+  "scripts": {
+    "desktop": "electron .",
+    "pack:win": "electron-builder --win nsis",
+    "test": "python tests/test-v110-privacy.py && python tests/test-v110-ui.py && python tests/test-v110-paper-ui.py && python tests/test-v110-browser.py && python tests/test-v110-name.py && python tests/test-v110-delight.py && python tests/test-v110-journey.py && python tests/test-v110-companion.py && node tests/test-v110-pdf.js && python tests/test-v110-http.py && python tests/test-v110-quality.py && python tests/test-v110-eye-hero-contrast.py",
+    "test:browser": "python tests/test-v110-browser.py",
+    "test:pdf": "node tests/test-v110-pdf.js",
+    "test:companion": "python tests/test-v110-companion.py",
+    "test:hero-contrast": "python tests/test-v110-eye-hero-contrast.py"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.scholarflow.workspace",
+    "productName": "ScholarFlow",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "index.html",
+      "app.js",
+      "styles.css",
+      "windows/main.cjs",
+      "pdf-intelligence.js",
+      "assets/**/*",
+      "windows/preload.cjs"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
