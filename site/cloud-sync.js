@@ -9,6 +9,18 @@
   const ACK_KEY='sf_cloud_ack_v2_';
   const LAST_ACCOUNT_KEY='sf_cloud_last_account_v1';
   const SWITCH_GUARD_KEY='sf_cloud_account_review_v1'; // Non-secret safety flag; never stores credentials or sessions.
+  // Non-secret: the last email used to sign in, so an expired session becomes a one-click
+  // re-login instead of a confusing "register again" form.
+  const LAST_EMAIL_KEY='sf_cloud_last_email_v1';
+  // Session mirror. The SDK keeps its own session in localStorage under
+  // 'workbuddy-cloud.session.<publishableKey>' and DELETES it whenever a token refresh is
+  // rejected (invalid_grant / unauthenticated) — including when the refresh was merely
+  // interrupted by a reload while the server had already rotated the token. That single
+  // behaviour is what makes an account look "forgotten". We keep one copy so a session the
+  // SDK threw away can be restored when it is still valid, and clear it on explicit logout.
+  const MIRROR_KEY='sf_cloud_session_mirror_v1';
+  const MIRROR_TRIED_KEY='sf_cloud_session_restored_v1';
+  const REFRESH_WINDOW_MS=90000; // The SDK refreshes when less than 90s of validity remain.
   const MAX_BYTES=4*1024*1024;
   const rawConfig=window.SCHOLARFLOW_CLOUD_CONFIG||{};
   const endpoint=String(rawConfig.endpoint||'').trim().replace(/\/+$/,'');
@@ -45,6 +57,42 @@
   function asRow(data){return Array.isArray(data)?data[0]||null:data||null}
   const state={session:null,user:null,remote:null,revision:null,active:false,conflict:false,busy:false,open:false,message:'',level:'',timer:null,queue:false,uploading:false,online:navigator.onLine!==false,filesBusy:false,pending:false,retryDelay:3000,accountGuard:false,networkIssue:false};
   try{state.accountGuard=localStorage.getItem(SWITCH_GUARD_KEY)==='review'}catch(_){}
+  // Can this browsing context persist anything at all? A sandboxed / embedded preview iframe,
+  // a private window with storage disabled, or an opaque origin makes localStorage throw.
+  // The SDK silently degrades to an in-memory store in that case, so the login never
+  // survives a reload and the user keeps being asked to sign in again. We must say so
+  // instead of silently looping.
+  const storageReady=(()=>{
+    try{const probe='__sf_cloud_probe__';localStorage.setItem(probe,'1');
+        const ok=localStorage.getItem(probe)==='1';localStorage.removeItem(probe);return ok}
+    catch(_){return false}
+  })();
+  state.storageReady=storageReady;
+  state.sessionLost=null;      // 'expired' | 'storage' | null — non-secret UI state
+  function lastEmail(){try{return String(localStorage.getItem(LAST_EMAIL_KEY)||'')}catch(_){return ''}}
+  function rememberEmail(email){
+    const value=String(email||'').trim();if(!value)return;
+    try{localStorage.setItem(LAST_EMAIL_KEY,value)}catch(_){}
+  }
+  function saveMirror(session){
+    try{
+      if(!session?.accessToken||!session?.refreshToken||typeof session.expiresAt!=='number')return;
+      localStorage.setItem(MIRROR_KEY,JSON.stringify({accessToken:session.accessToken,
+        refreshToken:session.refreshToken,expiresAt:session.expiresAt,
+        user:session.user||null,savedAt:Date.now()}));
+    }catch(_){}
+  }
+  function readMirror(){
+    try{
+      const raw=localStorage.getItem(MIRROR_KEY);if(!raw)return null;
+      const value=JSON.parse(raw);
+      if(!value||typeof value.accessToken!=='string'||typeof value.refreshToken!=='string'||
+         typeof value.expiresAt!=='number')return null;
+      return value;
+    }catch(_){return null}
+  }
+  function clearMirror(){try{localStorage.removeItem(MIRROR_KEY);localStorage.removeItem(MIRROR_TRIED_KEY)}catch(_){}}
+  const sdkSessionKey=()=>'workbuddy-cloud.session.'+apiKey;
   // Auth views are client-side presentation state only. SDK owns all sessions and identity.
   let authView='login', loginMethod='password';
   const authDraft={email:'',password:'',code:'',newPassword:'',confirmPassword:''};
@@ -173,6 +221,7 @@
     // in-progress email challenge, form draft and resend timer in that situation.
     if(!preserveAuth){
       clearSecrets();authView='login';loginMethod='password';
+      if(!authDraft.email)authDraft.email=lastEmail();
       for(const mode of ['login','signup','reset']){
         challenges[mode]=null;challengeEmails[mode]='';cooldowns[mode]=0;otpUnconfirmed[mode]=false;
       }
@@ -207,6 +256,39 @@
     }
     state.conflict=true;setPreferred(false);
   }
+  // Restore a session the SDK discarded, but ONLY when it still has more than the SDK's
+  // refresh window left (so no rotation/refresh is triggered) and only once per
+  // generation — otherwise a genuinely revoked token would loop.
+  let restoringMirror=false;
+  async function tryRestoreMirror(){
+    if(restoringMirror||state.user)return false;
+    const mirror=readMirror();
+    if(!mirror)return false;
+    if(mirror.expiresAt-Date.now()<=REFRESH_WINDOW_MS)return false;
+    try{if(localStorage.getItem(MIRROR_TRIED_KEY)===String(mirror.expiresAt))return false}catch(_){return false}
+    restoringMirror=true;
+    try{
+      localStorage.setItem(MIRROR_TRIED_KEY,String(mirror.expiresAt));
+      // Re-create the SDK's own record. Shape matches what the SDK itself writes and
+      // validates on read (accessToken / refreshToken / expiresAt / user).
+      localStorage.setItem(sdkSessionKey(),JSON.stringify({accessToken:mirror.accessToken,
+        refreshToken:mirror.refreshToken,expiresAt:mirror.expiresAt,user:mirror.user||{}}));
+    }catch(_){restoringMirror=false;return false}
+    try{
+      await startUser();
+      if(state.user){setMessage('已恢复上次的登录状态（账号无需重新注册）。','success');return true}
+    }catch(e){
+      // The token was already revoked server-side. Drop the mirror and fall through to login.
+      clearMirror();
+    }finally{restoringMirror=false}
+    return false;
+  }
+  function markSessionLost(kind){
+    const email=lastEmail();
+    if(email)authDraft.email=email;
+    authView='login';loginMethod='password';
+    state.sessionLost=kind||'expired';
+  }
   async function startUser(session){
     if(!cloud)return;
     const flowAtStart=authFlowVersion;
@@ -218,8 +300,14 @@
       // Ignore a delayed pre-login getSession() response if an OTP/password flow
       // has started since it was requested. A null session is not a logout.
       if(fromSdk&&flowAtStart!==authFlowVersion)return;
+      if(await tryRestoreMirror())return;
+      // Only claim "your session ended" when this browser actually had one. A first-time
+      // visitor must not be told that a login expired.
+      if(lastEmail()||readMirror())markSessionLost(storageReady?'expired':'storage');
+      else state.sessionLost=null;
       resetRemote({preserveAuth:!state.user});render();return;
     }
+    state.sessionLost=null;
     // Detect an account changed in another tab or between page loads.
     // The identifier is non-secret and is NEVER used to impersonate a cloud session.
     try{
@@ -229,7 +317,14 @@
     }catch(_){}
     if(state.user&&state.user.id!==String(user.id)){requireAccountReview();resetRemote();}
     state.session=current;
-    state.user={id:String(user.id),email:String(user.email||'')};
+    // The SDK's parseSession only maps id/name/avatarUrl; the email lives in the raw
+    // payload. Without this fallback the account bar shows a blank email and the user
+    // cannot tell which account is remembered.
+    const resolvedEmail=String(user.email||user.raw?.email||user.raw?.user_metadata?.email||lastEmail()||'');
+    state.user={id:String(user.id),email:resolvedEmail};
+    if(resolvedEmail)rememberEmail(resolvedEmail);
+    saveMirror({accessToken:current?.accessToken,refreshToken:current?.refreshToken,
+                expiresAt:current?.expiresAt,user:{id:String(user.id),email:resolvedEmail}});
     await loadRemote();state.conflict=false;alignAuto();updatePending();
     setMessage(state.accountGuard?'已进入其他账号。本机记录没有被删除或上传；请先核对本机和云端数据，再决定手动上传或恢复。自动同步已暂停。':state.conflict?'云端修订版本与上次同步状态不一致，自动同步已暂停。请检查后选择保留的版本。':state.active&&state.pending?'发现离线期间的本机更改，已排队等待安全同步。':state.remote?(snapshotMatches()?'本机与云端版本一致。':'本机与云端内容不同。选择下载或明确确认覆盖后才会同步。'):'云端尚无记录，可在本机录入并主动首次上传。');
   }
@@ -324,6 +419,9 @@
     requireAccountReview();state.busy=true;render();
     try{
       unwrap(await cloud.auth.signOut());resetRemote();
+      // An explicit logout must leave no token copy behind, otherwise "退出登录" would not
+      // actually remove the credentials from this browser.
+      clearMirror();
       setMessage(switchAccount?'已退出原账号。现在可登录另一个账号；本机科研记录保留，但自动同步会保持暂停，直到您主动核对数据。':'已退出 WorkBuddy 云端账户。本机数据保留，重新登录时会先暂停自动同步。','success');
       if(switchAccount)panel?.querySelector('input[name="email"]')?.focus();
     }catch(e){setMessage('退出云端账号失败：'+e.message,'error')}
@@ -542,7 +640,15 @@
     if(!state.user){
       const btn=(action,label)=>`<button type="button" data-cloud="${action}" class="${(authView==='login'&&action==='tab-login'||authView==='signup'&&action==='tab-signup')?'is-selected':''}" aria-pressed="${(authView==='login'&&action==='tab-login'||authView==='signup'&&action==='tab-signup')?'true':'false'}">${label}</button>`;
       const modeTabs=`<nav class="sf-cloud-auth-tabs" aria-label="账号入口">${btn('tab-login','登录')}${btn('tab-signup','注册')}</nav>`;
-      const baseEmail='<label>邮箱<input required name="email" autocomplete="username" type="email" placeholder="请输入邮箱地址"></label>';
+      const remembered=escapeHtml(authDraft.email||lastEmail());
+      const baseEmail=`<label>邮箱<input required name="email" autocomplete="username" type="email" placeholder="请输入邮箱地址" value="${remembered}"></label>`;
+      // Say what actually happened. Being silently dropped back onto a sign-in form is why
+      // an existing account gets mistaken for a missing one.
+      const notice=state.sessionLost
+        ? `<div class="sf-cloud-session-notice" role="status"><strong>登录状态已失效，请重新登录</strong><span>${state.sessionLost==='storage'
+            ?'当前浏览环境无法保存登录状态（应用内预览、隐私窗口或禁用网站数据都会导致）。'
+            :'云端会话已过期或已被回收。'}你的账号仍然存在，<b>不需要重新注册</b>；用原邮箱登录即可，本机科研记录未受影响。</span><button type="button" data-cloud="tab-login">去登录（邮箱已填好）</button></div>`
+        : (storageReady?'':`<div class="sf-cloud-session-notice" role="status"><strong>本环境无法保存登录状态</strong><span>每次打开都需要重新登录。请用浏览器直接打开该站点，不要使用应用内预览或隐私窗口。</span></div>`);
       let content='';
       if(authView==='login'){
         content=`${modeTabs}<div class="sf-cloud-methods" role="group" aria-label="登录方式"><button type="button" data-cloud="method-password" aria-pressed="${loginMethod==='password'}" class="${loginMethod==='password'?'is-selected':''}">密码登录</button><button type="button" data-cloud="method-code" aria-pressed="${loginMethod==='code'}" class="${loginMethod==='code'?'is-selected':''}">验证码登录</button></div>
@@ -567,7 +673,7 @@
           <label>再次输入新密码<input name="confirmPassword" autocomplete="new-password" type="password" minlength="8" placeholder="确认新密码" required></label>
           <button type="submit" data-mode="reset" class="sf-cloud-primary sf-cloud-submit">确认重置密码</button></form>`;
       }
-      return `<p class="sf-cloud-hint">WorkBuddy 云账户与本机科研数据相互独立。登录前数据仅保存在本机，登录后也不会自动上传。</p>${state.accountGuard?'<div class="sf-cloud-account-warning" role="status"><strong>账号切换保护已开启</strong><span>本机记录保持不变。登录后请先核对云端版本；不会自动把前一账号的数据上传到新账号。</span></div>':''}${content}<div class="sf-cloud-actions sf-cloud-probe"><button type="button" data-cloud="probe">检查 SDK 会话</button></div>${state.networkIssue?diagnosticsPanel():''}`;
+      return `<p class="sf-cloud-hint">WorkBuddy 云账户与本机科研数据相互独立。登录前数据仅保存在本机，登录后也不会自动上传。</p>${notice}${state.accountGuard?'<div class="sf-cloud-account-warning" role="status"><strong>账号切换保护已开启</strong><span>本机记录保持不变。登录后请先核对云端版本；不会自动把前一账号的数据上传到新账号。</span></div>':''}${content}<div class="sf-cloud-actions sf-cloud-probe"><button type="button" data-cloud="probe">检查 SDK 会话</button></div>${state.networkIssue?diagnosticsPanel():''}`;
     }
     const equal=snapshotMatches();
     const account=escapeHtml(state.user.email);
@@ -631,8 +737,17 @@
       if(!configured)return setMessage('WorkBuddy 云 SDK 或项目配置未就绪。','error');
       if(!state.online)return setMessage('设备当前处于离线状态，请先联网。','error');
       state.busy=true;render();
-      try{unwrap(await cloud.auth.getSession());setMessage('SDK 会话读取完成，但此操作不一定访问邮件服务器，不能证明验证码接口畅通。','success')}
-      catch(e){state.networkIssue=isNetworkTransportFailure(e);setMessage('SDK 会话读取失败：'+authFriendlyError(e),'error')}
+      // Report the few facts that decide whether a login can survive a reload. Never the token itself.
+      const facts=()=>{
+        const mirror=readMirror();
+        const left=mirror?Math.round((mirror.expiresAt-Date.now())/60000):null;
+        return `存储${storageReady?'可用':'不可用'} · 本机会话${mirror?'已保存（约剩 '+Math.max(left,0)+' 分钟）':'未保存'} · 记住的邮箱${lastEmail()?'已记录':'无'}`;
+      };
+      try{
+        unwrap(await cloud.auth.getSession());
+        setMessage('SDK 会话读取完成。'+facts()+'。此操作不能证明验证码接口畅通，也不代表邮件服务器可达。','success');
+      }
+      catch(e){state.networkIssue=isNetworkTransportFailure(e);setMessage('SDK 会话读取失败：'+authFriendlyError(e)+'（'+facts()+'）','error')}
       finally{state.busy=false;render()}
       return;
     }
@@ -749,5 +864,5 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
   // Expose only non-secret read-only UI state, useful for acceptance testing.
-  window.ScholarCloudStatus=()=>({configured,signedIn:!!state.user,revision:state.revision,autoSync:state.active,conflict:state.conflict,online:state.online,pending:state.pending});
+  window.ScholarCloudStatus=()=>({configured,signedIn:!!state.user,revision:state.revision,autoSync:state.active,conflict:state.conflict,online:state.online,pending:state.pending,storageReady,sessionLost:state.sessionLost,lastEmail:lastEmail()});
 })();

@@ -112,6 +112,16 @@ body.sf-cloud-dialog-open{overflow:hidden}
 :root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-actions button[data-cloud='logout']{color:#ffd8da;border-color:#8b606d}
 :root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-warning{background:#493e2c;color:#ffe6b4;border-color:#8d7454}
 :root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-warning button{background:#4c402d;border-color:#b99e71;color:#fff2dc}
+/* 2026.11.15-1: say why a session ended, so an expired login is never mistaken for a lost account. */
+.sf-cloud-session-notice{display:grid;gap:7px;padding:12px;margin:12px 0;border:1px solid #9fc0e0;border-radius:11px;background:#f1f8ff;color:#22405c;line-height:1.65;font-size:12px}
+.sf-cloud-session-notice strong{font-size:12.5px}
+.sf-cloud-session-notice span{overflow-wrap:anywhere}
+.sf-cloud-session-notice b{color:#0f5ea8}
+.sf-cloud-session-notice button{justify-self:start;min-height:38px;padding:6px 12px;background:#fff;border:1px solid #8fb2d3;border-radius:9px;font-size:12px;font-weight:700;color:#1c4f7d;cursor:pointer}
+:root[data-sf-mode='eye'] .sf-cloud-session-notice{background:#eef5ea;border-color:#b6cbb1;color:#2c4732}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-session-notice{background:#26374a;color:#d9eaff;border-color:#4c6c8c}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-session-notice b{color:#9fd0ff}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-session-notice button{background:#31485f;border-color:#6c88a4;color:#eaf5ff}
 @media(max-width:380px){.sf-cloud-identity{flex-wrap:wrap}.sf-cloud-signed-in{margin-left:51px}.sf-cloud-account-actions{gap:7px}}
 
 /* 2026.11.13: optional, non-secret network diagnostics; keep auth layout intact. */
