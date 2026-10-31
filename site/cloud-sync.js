@@ -344,6 +344,17 @@
     if(state.conflict&&!force){setMessage('发现云端版本冲突。请先重新检查云端，再手动选择版本。','error');return}
     if(state.remote&&!force&&!snapshotMatches()&&!previousActive){setMessage('本机与云端版本不同。必须先明确选择上传覆盖或下载云端。','error');return}
     let local;try{local=validateLocal()}catch(e){setMessage(e.message,'error');return}
+    // 幂等保护：云端内容已与本机完全一致时不再写入。
+    // 否则重复点击（或自动同步抖动）会不断抬高 revision，其他设备看到"有新版本"
+    // 就被迫重新确认一次，而实际内容并未变化——这是可避免的跨设备误报。
+    if(state.remote&&snapshotMatches()){
+      rememberAck(state.revision,state.remote.payload);
+      state.conflict=false;
+      if(state.accountGuard&&manual){setPreferred(false);clearAccountReview()}
+      alignAuto();updatePending();
+      setMessage('云端内容与本机一致，无需重复上传（版本 '+state.revision+'）。','success');
+      render();return;
+    }
     state.uploading=true;render();
     try{
       let result;
