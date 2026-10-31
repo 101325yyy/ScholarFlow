@@ -2674,7 +2674,7 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{
 ){color:var(--sf111-eye-secondary)!important;opacity:1!important}
 :root[data-sf-mode='eye'] #app :is(
   .file-symbol,.linked-file-path code,.board-item-kind,
-  .research-kanban-move,.board-column-head,.research-kanban-column-head
+  .board-column-head,.research-kanban-column-head
 ){background-color:var(--sf111-eye-well)!important;color:var(--sf111-eye-ink)!important}
 :root[data-sf-mode='eye'] #app :is(.file-item,.board-task,.research-kanban-card):hover{
   border-color:#8eae94!important;
@@ -3113,3 +3113,539 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 :root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.btn-outline,.category-chip) { background: #273a51; color: #d9e8fa; border-color: #526b85; }
 :root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.notice,.pill,.badge-count,.tag) { background: #2b425c; color: #dceafe; border-color: #465f7e; }
 :root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.status.success,.status.warn,.status.danger) { color: var(--ui-ink); background: #34475e; }
+
+/* ===========================================================================
+   ScholarFlow UI 2026.10 · unified workspace finish
+   Integrated into styles.css. Presentation only: no storage keys, JS or APIs.
+   Intentional constraints: keep the original sidebar width and board geometry,
+   and preserve eye/night/accessibility styles for all six theme presets.
+   =========================================================================== */
+:root {
+  --ui-radius: 15px;
+  --ui-radius-sm: 10px;
+  --ui-shadow: 0 2px 8px rgba(28,49,83,.025), 0 12px 28px -17px rgba(28,49,83,.14);
+  --ui-ease: cubic-bezier(.2,.7,.2,1);
+}
+:root:not([data-sf-layout='night']):not([data-sf-mode='eye']) {
+  --ui-canvas: #f3f6fb;
+  --ui-stroke: #d9e3ef;
+  --ui-stroke-soft: #e7edf5;
+  --ui-ink: #24364e;
+  --ui-ink-strong: #162840;
+  --ui-secondary: #4d627c;
+  --ui-muted: #5c6f86;
+}
+:root:not([data-sf-layout='night']):not([data-sf-mode='eye']) .shell {
+  background: radial-gradient(ellipse 68% 46% at 82% 0%, rgba(210,226,250,.22), transparent 100%),var(--ui-canvas);
+}
+/* Navigation: consistent alignment and legible labels across every module. */
+.sidebar { border-right: 1px solid var(--ui-stroke-soft); }
+.sidebar .brand { gap: 12px; min-height: 66px; margin-bottom: 4px; }
+.sidebar .brand-text { font-size: 16px; font-weight: 800; letter-spacing: -.025em; line-height: 1.4; }
+.sidebar .nav-label { font-size: 11px; font-weight: 780; letter-spacing: .065em; padding: 16px 13px 7px; }
+.sidebar .nav { min-height: 42px; font-size: 13px; border: 1px solid transparent; margin: 2px 0; }
+.sidebar .nav-icon { font-size: 17px; line-height: 1; opacity: .85; }
+.sidebar .nav.active { box-shadow: inset 3px 0 0 var(--ui-primary); }
+.sidebar .nav.active .nav-icon { opacity: 1; }
+.sidebar .sidebar-foot { font-size: 11px; }
+/* Main rhythm: retain actual content width, reduce visual clutter. */
+.main { min-width: 0; }
+.topbar { height: 76px; margin-bottom: 19px; }
+.page-name { font-size: 20px; font-weight: 760; line-height: 1.3; letter-spacing: -.025em; }
+.topbar .search { min-width: 0; }
+/* The search field is a compound control: show exactly ONE outer focus ring.
+   Do not paint a second ring or inset shadow on its child input. */
+.topbar .search:focus-within { outline: 0; }
+#app .topbar .search:focus-within {
+  border-color: var(--ui-primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--ui-primary) !important;
+}
+#app .topbar .search input,
+#app .topbar .search input:focus,
+#app .topbar .search input:focus-visible {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0;
+}
+
+.right-actions .round, .avatar-button { min-width: 38px; min-height: 38px; }
+.workspace-title h1 { line-height: 1.25; }
+.workspace-title p { font-size: 12px; line-height: 1.7; }
+:is(.card,.control-panel,.stat-mini,.project-card,.task-tile,.paper-card,.thought-card,.sim-overview,.advisor-card,.literature-tile) {
+  border-color: var(--ui-stroke-soft);
+  box-shadow: var(--ui-shadow);
+}
+.card-pad { padding: clamp(17px,1.4vw,22px); }
+.head h3 { font-size: 15px; }
+/* Hero: clear identity hierarchy, cleaner contrast and calmer texture. */
+.dash-hero {
+  border: 1px solid rgba(113,167,223,.22);
+  border-radius: 18px;
+  padding: clamp(21px,2vw,30px);
+  background: radial-gradient(circle at 95% 8%,rgba(104,178,250,.32),transparent 39%),linear-gradient(116deg,#162f51 0%,#204a79 55%,#2865a2 100%);
+  box-shadow: 0 12px 33px -21px rgba(19,52,96,.55);
+}
+.dash-hero:after { border-color: rgba(229,243,255,.22); opacity: .8; }
+.dash-hero h1 { letter-spacing: -.035em; line-height: 1.27; font-size: clamp(23px,2.25vw,30px); }
+.dash-hero .dash-overline { font-size: 10px; font-weight: 750; letter-spacing: .14em; color: #c2e0ff; }
+.dash-hero p { color: #e0ecfa; font-size: 12px; }
+.dash-hero-stats strong { font-variant-numeric: tabular-nums; }
+.dash-profile-info>div,.dash-hero-stats>div { border-color: rgba(231,244,255,.16); }
+.dash-profile-info small { color: #d0e1f4; }
+.dash-profile-info strong { color: #fff; }
+.dash-quick { gap: 13px; }
+.dash-quick-card { border: 1px solid var(--ui-stroke-soft); border-radius: 13px; min-height: 74px; padding: 14px 16px; box-shadow: var(--ui-shadow); transition: box-shadow .15s var(--ui-ease),transform .15s var(--ui-ease),border-color .15s; }
+.dash-quick-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -16px rgba(29,65,100,.3); border-color: rgba(var(--sf-accent-rgb,23,103,188),.35); }
+.dash-quick-icon { border-radius: 12px; height: 42px; width: 42px; background: var(--ui-soft-primary); color: var(--ui-primary); }
+.dash-quick-card b { font-size: 13px; line-height: 1.4; }
+.dash-quick-card small { color: var(--ui-secondary); font-size: 11px; }
+.dash-mini { border-radius: var(--ui-radius); }
+.dash-mini-top { color: var(--ui-ink); font-size: 12px; }
+.dash-line { color: var(--ui-secondary); }
+.dash-lower>.card { border-radius: var(--ui-radius); }
+/* Metrics, tables, forms, controls: shared rhythm and explicit focus. */
+.workspace-stats,.kpis { gap: 14px; }
+.stat-mini,.kpi { border-radius: 13px; }
+.stat-mini strong,.kpi b { font-variant-numeric: tabular-nums; }
+.stat-mini span,.kpi .caption { font-size: 12px; color: var(--ui-secondary); }
+.btn { min-height: 40px; border-radius: 10px; }
+.btn-sm { min-height: 32px; }
+.btn:not(:disabled):focus-visible,:is(.nav,.segment,.category-chip,.round,.search input,.input,.select,.textarea):focus-visible {
+  outline: 2px solid var(--ui-primary); outline-offset: 3px;
+}
+.btn-ghost { background: var(--ui-surface-muted); color: var(--ui-secondary); }
+:where(.input,.textarea,.select) { line-height: 1.45; }
+.field label { line-height: 1.55; }
+.control-panel { border-radius: 14px; }
+.controls-row { gap: 10px; }
+.filter-strip { align-items: center; }
+.filter-strip .select { min-height: 39px; }
+.segmented { border-radius: 11px; }
+.segment { font-weight: 600; }
+.segment.on { font-weight: 760; }
+.responsive-table { overflow-x: auto; }
+.table th,.modern-table th { white-space: nowrap; font-size: 12px; }
+.table tbody tr,.modern-table tbody tr { transition: background-color .15s ease; }
+.literature-title-cell strong,.task-cell strong { line-height: 1.55; }
+/* Research boards: improve scanability but keep tested footer/borders untouched. */
+.board-column,.research-kanban-column { border: 1px solid var(--ui-stroke); border-radius: 14px; }
+.research-kanban-column-head,.board-column-head { font-weight: 760; font-size: 13px; }
+.research-kanban-column-head { border-bottom: 1px solid var(--ui-stroke); }
+.research-kanban-card,.board-task { border: 1px solid var(--ui-stroke); border-radius: 12px; box-shadow: 0 2px 9px rgba(19,45,79,.045); }
+.research-kanban-card .board-card-title { font-size: 13px; font-weight: 750; }
+.research-kanban-card .research-kanban-date { font-size: 11px; }
+.research-kanban-card:focus-within { outline: 2px solid var(--ui-primary); outline-offset: 2px; }
+.board-empty { color: var(--ui-muted); }
+.task-tile,.paper-card,.thought-card,.sim-overview { border-radius: var(--ui-radius); }
+.task-tile h3,.thought-card h3,.paper-card h3 { line-height: 1.5; }
+.status,.tag,.origin-tag { letter-spacing: .003em; }
+.empty { line-height: 1.8; }
+.empty b { margin: 9px auto; }
+/* Dialogs and file preview: strong grouping without stealing viewport height. */
+.dialog { border: 1px solid var(--ui-stroke); border-radius: 17px; }
+.dialog-head { min-height: 64px; gap: 10px; }
+.dialog-head h3 { font-size: 18px; letter-spacing: -.02em; }
+.dialog-body { line-height: 1.7; }
+.dialog-foot { gap: 10px; }
+.pdf-viewer { border-radius: 15px; }
+.toast { max-width: min(560px,calc(100vw - 32px)); line-height: 1.55; }
+:where(.dialog,.card,.control-panel,.stat-mini) :where(p,.muted,.subtle) { overflow-wrap: anywhere; }
+/* Preserve non-blue color presets, eye comfort, and real dark-mode surfaces. */
+:root[data-sf-mode='eye'] .dash-quick-card,
+:root[data-sf-mode='eye'] .research-kanban-card,
+:root[data-sf-mode='eye'] .board-task { background: var(--ui-surface); border-color: var(--ui-stroke); color: var(--ui-ink); }
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.dash-quick-card,.research-kanban-card,.research-kanban-column,.board-column,.dash-mini,.task-tile,.paper-card,.thought-card,.sim-overview,.stat-mini) {
+  background: var(--ui-surface); border-color: var(--ui-stroke); color: var(--ui-ink); box-shadow: var(--ui-shadow);
+}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.dash-quick-card b,.dash-mini-top,.task-tile h3,.paper-card h3,.thought-card h3,.research-kanban-card .board-card-title,.board-column-head,.research-kanban-column-head) { color: var(--ui-ink-strong); }
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.dash-quick-card small,.dash-line,.board-task p,.research-kanban-card>p,.research-kanban-card .research-kanban-date) { color: var(--ui-secondary); }
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) :is(.table th,.modern-table th,.table td,.modern-table td) { border-color: var(--ui-stroke); }
+@media (max-width:1180px) {
+  .dash-hero { gap: 22px; }
+  .dash-quick { gap: 10px; }
+}
+@media (max-width:900px) {
+  .sidebar { width: 218px; }
+  .dash-hero { padding: 22px; }
+}
+@media (max-width:650px) {
+  .sidebar { width: min(250px,82vw); }
+  .topbar { height: auto; min-height: 62px; margin-bottom: 14px; }
+  .main { padding-bottom: 32px; }
+  .dash-hero { padding: 19px 17px; border-radius: 16px; }
+  .dash-quick-card { min-height: 65px; padding: 11px; }
+  .dash-quick-icon { height: 34px; width: 34px; }
+  .workspace-title h1 { font-size: 22px; }
+  .card-pad { padding: 16px; }
+  .control-panel { padding: 12px; }
+  .dialog-head,.dialog-body,.dialog-foot { padding: 15px; }
+  .research-kanban { gap: 10px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .dash-quick-card,.table tbody tr,.modern-table tbody tr { transform: none !important; transition: none !important; }
+}
+
+/* 2026.10.2 audit: minimum usable calendar hit-area for compact arrow controls. */
+#app .cal-controls button[data-cal="prev"],
+#app .cal-controls button[data-cal="next"]{min-width:28px;min-height:34px;display:inline-flex;justify-content:center;align-items:center}
+
+
+/* ScholarFlow 2026.10.5 · MOBILE DRAWER / INTERACTION FIX
+   UI only: keeps original modules, routes, research data and PDF processing. */
+.sf-mobile-close,.sf-mobile-scrim{display:none}
+@media (max-width:900px){
+  :root.sf-drawer-open, :root.sf-drawer-open body{overflow:hidden!important;overscroll-behavior:none}
+  #app .sidebar{
+    position:fixed!important;inset:0 auto 0 0!important;
+    width:min(294px,84vw)!important;max-width:calc(100vw - 46px);
+    height:100dvh!important;z-index:102!important;
+    transform:translateX(-110%)!important;transition:transform .22s cubic-bezier(.2,.7,.2,1)!important;
+    box-shadow:none;padding:18px 14px 12px;overflow:hidden;
+    padding-bottom:max(12px,env(safe-area-inset-bottom));
+  }
+  #app .sidebar.show{transform:translateX(0)!important;box-shadow:16px 0 42px rgba(8,24,49,.2)}
+  #app .sidebar .brand{min-height:65px;gap:9px;padding:0 48px 12px 6px;margin-bottom:5px;position:relative;align-items:center}
+  #app .sidebar .brand-text{font-size:16px;line-height:1.35;overflow-wrap:anywhere}
+  #app .sidebar .nav-scroll{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-right:2px}
+  #app .sidebar .nav{min-height:45px;padding:10px 13px;font-size:14px;gap:13px}
+  #app .sidebar .nav-label{padding:15px 13px 7px;font-size:11px}
+  #app .sidebar .sidebar-foot{padding-top:12px;margin-top:5px}
+  #app .sf-mobile-close{
+    display:grid;place-items:center;position:absolute;right:0;top:0;
+    width:44px;height:44px;min-width:44px;border:1px solid var(--ui-stroke,#dce5f0);
+    border-radius:12px;color:var(--ui-ink,#263953);background:var(--ui-surface,#fff);
+    font-size:29px;line-height:1;cursor:pointer;
+  }
+  #app .sf-mobile-close:focus-visible{outline:3px solid var(--sf-accent,#1767bc);outline-offset:2px}
+  #app .sf-mobile-scrim{
+    display:none;position:fixed;inset:0;width:100%;height:100dvh;
+    border:0;border-radius:0;background:rgba(9,24,45,.51);
+    z-index:101;cursor:pointer;touch-action:manipulation;
+  }
+  :root.sf-drawer-open #app .sf-mobile-scrim{display:block}
+  #app .mobile-menu{display:inline-grid;place-items:center;width:44px;height:44px;min-width:44px;font-size:22px}
+  #app .topbar{min-width:0}
+  #app .topbar .right-actions{min-width:0}
+}
+@media (max-width:650px){
+  #app .topbar{gap:7px}
+  #app .topbar .right-actions{gap:6px;flex:1;justify-content:flex-end}
+  #app .topbar .search{flex:1 1 auto;width:auto;min-width:82px;max-width:none;height:44px}
+  #app .topbar .round,#app .topbar .avatar-button{height:44px;width:44px;min-width:44px}
+  #app .topbar .search input{min-width:0;text-overflow:ellipsis}
+  #app .dash-hero{padding:18px 15px;gap:12px}
+  #app .dash-hero h1{font-size:clamp(22px,6.5vw,27px)}
+  #app .sf14-graduation{max-width:100%}
+  #app .dash-profile-info{gap:8px}
+  #app .dash-profile-info>div{min-width:0}
+}
+@media (max-width:390px){
+  #app .topbar .right-actions>button[data-nav="tasks"]{display:none}
+  #app .topbar .search{min-width:75px}
+}
+@media (prefers-reduced-motion:reduce){#app .sidebar{transition:none!important}}
+
+/* ScholarFlow 2026.11.4 — vertical settings and native single-choice controls.
+   Compatible with unchanged stored keys and appearance form submit semantics. */
+.settings-v131-grid{grid-template-columns:minmax(0,1fr)!important;gap:18px}
+.settings-v131-grid>.card{width:min(100%,970px);max-width:100%;margin-inline:auto;min-width:0}
+.settings-v131-grid .settings-appearance-card .fields{display:grid;grid-template-columns:minmax(0,1fr)!important;gap:17px}
+.settings-v131-grid .settings-appearance-card .field,.settings-v131-grid .settings-appearance-card .field.wide{grid-column:1/-1;max-width:100%;padding-bottom:0}
+.settings-v131-grid .settings-appearance-card .field>:is(input:not([type=file]),select,textarea){width:100%;min-width:0;max-width:100%}
+.settings-v131-grid .settings-appearance-card .sf-pref-select{min-height:46px;padding:10px 42px 10px 14px;border-radius:11px;font-size:14px;cursor:pointer}
+.settings-v131-grid .settings-appearance-card :is(.input,.textarea,.sf-pref-select){max-width:690px}
+.settings-v131-grid .settings-appearance-card .textarea{min-height:88px}
+.settings-v131-grid .settings-appearance-card .sf-preference-section-label{margin:7px 0 0;padding:14px 0 9px;border-top:1px solid var(--sf-stroke,#dfe8f1)}
+.settings-v131-grid .settings-appearance-card .sf-preference-section-label strong{font-size:15px;color:var(--sf-ink,#23334c)}
+.settings-v131-grid .settings-appearance-card .sf-preference-section-label p{margin:4px 0 0}
+.settings-v131-grid .settings-appearance-card .sf-select-setting{gap:8px}
+.settings-v131-grid .settings-appearance-card .sf-preference-help{max-width:690px;min-height:19px;margin:0;line-height:1.65;color:var(--sf-muted,#536a81)}
+.settings-v131-grid .settings-appearance-card .sf-compact-preview{display:flex;align-items:center;gap:10px;max-width:690px;color:var(--sf-muted,#647891);font-size:12px}
+.settings-v131-grid .settings-appearance-card .sf-compact-swatch{display:block;width:118px;height:16px;border-radius:5px;border:1px solid rgba(52,73,101,.2);flex:none;background:linear-gradient(90deg,#1767bc 0 42%,#eaf3ff 42% 72%,#fff 72%)}
+.settings-v131-grid .settings-appearance-card .sf-compact-swatch[data-preset='sage']{background:linear-gradient(90deg,#487a65 0 42%,#e5efe9 42% 72%,#fff 72%)}
+.settings-v131-grid .settings-appearance-card .sf-compact-swatch[data-preset='paper']{background:linear-gradient(90deg,#936b4e 0 42%,#f4e8d9 42% 72%,#fffaf1 72%)}
+.settings-v131-grid .settings-appearance-card .sf-compact-swatch[data-preset='graphite']{background:linear-gradient(90deg,#52677c 0 42%,#e0e6ec 42% 72%,#fff 72%)}
+.settings-v131-grid .settings-appearance-card .sf-compact-swatch[data-preset='glacier']{background:linear-gradient(90deg,#257e98 0 42%,#d9eff4 42% 72%,#fff 72%)}
+.settings-v131-grid .settings-appearance-card .sf-compact-swatch[data-preset='lavender']{background:linear-gradient(90deg,#7668ad 0 42%,#ebe5fa 42% 72%,#fff 72%)}
+.settings-v131-grid .settings-appearance-card .wallpaper-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;max-width:690px}
+.settings-v131-grid .settings-appearance-card .wallpaper-actions .btn{min-height:38px}
+.settings-v131-grid .settings-appearance-card .field.wide>button[type='submit']{min-height:44px;width:fit-content;min-width:190px}
+.settings-v131-grid .settings-appearance-card :is(select,input,textarea):focus-visible{outline:2px solid var(--sf-accent,#237dd7);outline-offset:2px}
+:root[data-sf-layout='night'] .settings-appearance-card :is(.sf-preference-section-label strong,.sf-preference-help,.sf-compact-preview){color:#d7e8fa!important}
+:root[data-sf-mode='eye'] .settings-appearance-card .sf-preference-help{color:#3d6255}
+@media(max-width:650px){.settings-v131-grid>.card{width:100%}.settings-v131-grid .settings-appearance-card .fields{gap:15px}.settings-v131-grid .settings-appearance-card .sf-pref-select{min-height:48px}.settings-v131-grid .settings-appearance-card .field.wide>button[type='submit']{width:100%}}
+
+
+/* ScholarFlow 2026.11.5 — settings information architecture: wide content, two complementary columns on desktops. */
+@media(min-width:1120px){
+  .settings-v131-grid{display:grid!important;grid-template-columns:minmax(0,1.3fr) minmax(320px,.85fr)!important;gap:18px;align-items:start}
+  .settings-v131-grid>.card{width:100%!important;max-width:none!important;margin:0!important;min-width:0}
+  .settings-v131-grid>.settings-appearance-card{grid-column:1!important;grid-row:1 / span 3;align-self:start}
+  .settings-v131-grid>.sf-translation-card{grid-column:2;grid-row:1}
+  .settings-v131-grid>.card:nth-child(3){grid-column:2;grid-row:2}
+  .settings-v131-grid>.card:nth-child(n+4){grid-column:2}
+  .settings-v131-grid .settings-appearance-card .field>:is(input:not([type=file]),select,textarea),
+  .settings-v131-grid .settings-appearance-card :is(.sf-preference-help,.sf-compact-preview,.wallpaper-actions){max-width:100%}
+}
+@media(min-width:700px) and (max-width:1119px){.settings-v131-grid>.card{width:100%!important;max-width:100%!important}}
+@media(max-width:699px){.settings-v131-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important}.settings-v131-grid>.card{width:100%;max-width:100%;margin:0}.settings-v131-primary,.settings-v131-grid{gap:12px}}
+.settings-v131-grid .card{scroll-margin-top:88px}
+.settings-v131-grid .settings-appearance-card .fields{align-content:start}
+.settings-v131-grid .settings-appearance-card .sf-pref-select{width:100%}
+.settings-v131-grid :is(.btn,.select,.input,textarea):focus-visible{outline-offset:2px}
+
+/* ScholarFlow 2026.11.6 — restrained homepage graduation and component polish.
+   Pure presentation; old classes, data-nav controls and persisted data are unchanged. */
+.dashboard-v18 .dash-hero-v16.sf13-hero{
+  --sf37-glass:rgba(255,255,255,.11);
+  --sf37-glass-stroke:rgba(235,247,255,.31);
+  gap:clamp(14px,1.5vw,24px);
+  border-radius:22px;
+  box-shadow:0 12px 34px rgba(25,54,90,.12);
+}
+.dashboard-v18 .sf35-identity.sf13-identity{align-items:center}
+.dashboard-v18 .sf35-hero-lead{grid-template-columns:minmax(0,1fr) minmax(240px,41%);align-items:stretch;gap:clamp(12px,1.2vw,22px)}
+.dashboard-v18 .sf35-hero-welcome .sf13-identity-top{gap:10px 12px}
+.dashboard-v18 .sf35-hero-welcome h1{margin:12px 0 9px;line-height:1.22;letter-spacing:-.025em}
+.dashboard-v18 .sf35-hero-welcome .sf13-greeting{font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.dashboard-v18 .sf35-hero-lead .sf14-graduation.sf37-graduation{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;
+  width:100%;min-width:0;max-width:none;
+  min-height:158px;padding:14px 17px 12px;
+  gap:9px;border-radius:17px;
+  background:linear-gradient(128deg,rgba(255,255,255,.17),rgba(255,255,255,.085));
+  border:1px solid var(--sf37-glass-stroke);box-shadow:inset 0 1px rgba(255,255,255,.09);
+}
+.sf37-grad-head,.sf37-grad-body,.sf37-grad-footer{position:relative;z-index:1;width:100%;min-width:0}
+.sf37-grad-head{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:19px}
+.sf37-grad-head .sf14-grad-kicker{font-size:9px;letter-spacing:.1em;line-height:1.3;font-weight:760;color:#dcefff}
+.sf37-grad-mark{font-size:10px;font-weight:600;line-height:1.3;white-space:nowrap;padding:3px 8px;border-radius:30px;background:rgba(255,255,255,.11);color:#e5f2ff}
+.sf37-grad-body{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sf37-grad-body .sf14-grad-meta{min-width:0;gap:6px;align-self:center}
+.sf37-grad-body .sf14-grad-meta strong{font-size:clamp(17px,1.35vw,21px);line-height:1.25;font-weight:750;letter-spacing:-.015em}
+.sf37-grad-body .sf14-grad-meta small{font-size:11px;overflow-wrap:anywhere;line-height:1.45;color:#dceafa}
+.sf37-grad-body .sf14-grad-num{flex-shrink:0;justify-content:flex-end;align-items:baseline;gap:5px;min-width:0;white-space:nowrap}
+.sf37-grad-body .sf14-grad-num b{font-size:clamp(39px,3.3vw,58px);line-height:1;font-weight:800;letter-spacing:-.045em}
+.sf37-grad-body .sf14-grad-num span{font-size:12px;font-weight:700}
+.sf37-grad-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:9px;border-top:1px solid rgba(240,247,255,.23)}
+.sf37-grad-caption{font-size:10px;line-height:1.5;color:#dbeafa;overflow-wrap:anywhere}
+.sf37-grad-footer .sf14-grad-edit{grid-column:auto;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  flex-shrink:0;white-space:nowrap;min-height:31px;margin:0;padding:4px 10px;
+  border:1px solid rgba(245,250,255,.35);border-radius:9px;background:rgba(255,255,255,.12);
+  color:#f4f9ff;text-decoration:none;font-size:11px;font-weight:650;transition:background-color .15s,border-color .15s}
+.sf37-grad-footer .sf14-grad-edit:hover{background:rgba(255,255,255,.22);border-color:rgba(245,250,255,.64)}
+.sf37-grad-footer .sf14-grad-edit:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+/* Reduce visual density while retaining all five profile fields and existing controls. */
+.dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row{gap:9px!important}
+.dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row>div{
+  min-height:64px;padding:10px clamp(10px,.75vw,14px);
+  background:rgba(255,255,255,.09);border-color:rgba(245,250,255,.25);
+  transition:background-color .15s,border-color .15s}
+.dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row>div:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45)}
+.dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row strong{font-size:clamp(12px,.92vw,16px)}
+.dashboard-v18 .sf13-hero .hero-achievement.hero-outcomes.sf13-outcomes{border-radius:17px;background:rgba(255,255,255,.105);border-color:rgba(245,250,255,.29)}
+.dashboard-v18 .sf13-hero .hero-outcome-stat{border-color:rgba(245,250,255,.19);background:rgba(255,255,255,.09)}
+.dashboard-v18 .sf13-hero .hero-outcome-stat strong{font-variant-numeric:tabular-nums}
+/* Subtle consistency pass across dashboard cards, forms and record rows. */
+.dashboard-v18 :is(.home-quick-card,.home-task-panel,.home-calendar-panel,.home-activity-panel){border-radius:16px}
+.dashboard-v18 .home-quick-card{transition:border-color .16s,box-shadow .16s,transform .16s}
+.dashboard-v18 .home-quick-card:hover{transform:translateY(-1px);box-shadow:0 7px 22px rgba(30,62,101,.1)}
+.dashboard-v18 .home-task-item{min-width:0}
+.dashboard-v18 .home-task-text{min-width:0;overflow-wrap:anywhere}
+.dashboard-v18 .home-task-text strong{overflow-wrap:anywhere}
+.settings-v131-grid .card{border-radius:16px}
+.settings-v131-grid .settings-appearance-card :is(.sf-pref-select,.input,.textarea){transition:border-color .15s,box-shadow .15s}
+.settings-v131-grid .settings-appearance-card :is(.sf-pref-select,.input,.textarea):focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--sf-accent,#1776e6) 13%,transparent)}
+/* Eye comfort and paper-like palettes use explicit readable foreground colors. */
+:root[data-sf-mode="eye"] .sf37-grad-mark,
+:root[data-sf-mode="eye"] .sf37-grad-caption,
+:root[data-sf-mode="eye"] .sf37-grad-head .sf14-grad-kicker,
+:root[data-sf-mode="eye"] .sf37-grad-body .sf14-grad-meta small,
+:root[data-sf-mode="eye"] .sf37-grad-footer .sf14-grad-edit{color:#294e3b}
+:root[data-sf-mode="eye"] .sf37-grad-footer{border-color:rgba(44,81,64,.22)}
+:root[data-sf-mode="eye"] .sf37-grad-mark,
+:root[data-sf-mode="eye"] .sf37-grad-footer .sf14-grad-edit{background:rgba(255,255,255,.65);border-color:rgba(43,80,61,.25)}
+@media(max-width:1490px){
+  .dashboard-v18 .sf35-hero-lead{grid-template-columns:minmax(0,1fr) minmax(235px,42%)}
+  .dashboard-v18 .sf35-hero-lead .sf14-graduation.sf37-graduation{padding:12px 14px}
+  .sf37-grad-body .sf14-grad-num b{font-size:clamp(36px,3vw,48px)}
+}
+@media(max-width:1260px){
+ .dashboard-v18 .dash-hero-v16.sf13-hero{gap:14px}
+ .dashboard-v18 .sf13-hero .hero-achievement.hero-outcomes.sf13-outcomes{padding:15px 17px}
+}
+@media(max-width:950px){
+ .dashboard-v18 .sf35-hero-lead{grid-template-columns:minmax(0,1fr)}
+ .dashboard-v18 .sf35-hero-lead .sf14-graduation.sf37-graduation{max-width:none}
+}
+@media(max-width:650px){
+ .dashboard-v18 .dash-hero-v16.sf13-hero{border-radius:18px}
+ .dashboard-v18 .sf35-hero-lead{gap:12px}
+ .dashboard-v18 .sf35-hero-lead .sf14-graduation.sf37-graduation{min-height:0;padding:13px 14px;gap:12px}
+ .sf37-grad-body .sf14-grad-num b{font-size:clamp(35px,9vw,46px)}
+ .dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row>div{min-height:55px}
+ .dashboard-v18 .sf13-hero .hero-achievement.hero-outcomes.sf13-outcomes{padding:13px}
+}
+@media(max-width:375px){
+ .sf37-grad-caption{display:none}
+ .sf37-grad-footer{justify-content:flex-end}
+ .sf37-grad-mark{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .dashboard-v18 .home-quick-card,.sf37-grad-footer .sf14-grad-edit,
+ .dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row>div{transition:none}
+}
+
+
+/* ScholarFlow 2026.11.7: balanced settings grid without changing forms or field semantics. */
+@media (min-width: 1024px){
+  .settings-v131-primary {display:grid!important;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr)!important;align-items:stretch;gap:18px!important}
+  .settings-v131-primary>.card {height:100%;min-width:0}
+  .settings-v131-primary .preview-card{display:flex;flex-direction:column}
+  .settings-v131-primary .preview-card > button{margin-top:auto;align-self:start}
+  .settings-v131-grid{display:grid!important;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr)!important;align-items:start;gap:18px!important}
+  .settings-v131-grid>.settings-appearance-card{grid-column:1!important;grid-row:1!important;min-width:0;height:100%;align-self:stretch}
+  .settings-v131-grid>.sf-settings-secondary{grid-column:2!important;grid-row:1!important;display:flex;flex-direction:column;gap:18px;min-width:0;height:100%}
+  .settings-v131-grid .sf-settings-secondary>.card{min-width:0}
+}
+@media (max-width:1023px){
+  .settings-v131-primary,.settings-v131-grid{grid-template-columns:minmax(0,1fr)!important;display:grid!important;gap:14px!important}
+ .settings-v131-grid>.settings-appearance-card{grid-column:1!important;grid-row:auto!important}
+  .sf-settings-secondary{grid-column:1!important;grid-row:auto!important;display:grid;gap:14px;min-width:0}
+}
+.settings-v131-grid .fields>.field{min-width:0}
+.settings-v131-grid .sf-pref-select{width:100%;max-width:100%}
+.settings-v131-grid .sf-translation-card .fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.settings-v131-grid .sf-translation-card .field.wide{grid-column:1/-1}
+.settings-v131-grid .sf-settings-secondary>.card{border:1px solid var(--sf-readable-line,#d9e4ee)}
+.settings-v131-grid :is(.head h3,.field label){overflow-wrap:anywhere}
+.settings-v131-primary .preview-card :is(p,.mini){overflow-wrap:anywhere}
+@media(max-width:600px){
+ .settings-v131-grid .sf-translation-card .fields{grid-template-columns:minmax(0,1fr)}
+ .settings-v131-grid .sf-translation-card .field.wide{grid-column:auto}
+ .settings-v131-grid .card-pad,.settings-v131-primary .card-pad{padding:16px!important}
+ .settings-v131-grid .sf-settings-secondary .backup-actions{display:flex;flex-wrap:wrap;gap:8px}
+}
+
+/* ScholarFlow 2026.11.8 — homepage panel tone & stroke system.
+ * Appearance only: no class/route/event/persisted-data changes.
+ * Each existing theme keeps its own hero gradient, but all nested surfaces
+ * use one panel tone, one inset tone, and strictly 1px non-focus strokes. */
+:root {
+  --sf118-hero-stroke:rgba(235,246,255,.24);
+  --sf118-panel-fill:rgba(255,255,255,.105);
+  --sf118-panel-stroke:rgba(236,247,255,.45);
+  --sf118-item-fill:rgba(255,255,255,.095);
+  --sf118-item-stroke:rgba(233,245,255,.28);
+  --sf118-action-fill:rgba(255,255,255,.115);
+  --sf118-action-stroke:rgba(238,249,255,.59);
+  --sf118-action-hover:rgba(255,255,255,.20);
+}
+:root[data-sf-mode='eye']{
+  --sf118-hero-stroke:#aec7b2;
+  --sf118-panel-fill:rgba(252,255,248,.36);
+  --sf118-panel-stroke:#89a68d;
+  --sf118-item-fill:rgba(255,255,255,.60);
+  --sf118-item-stroke:#b2ccb6;
+  --sf118-action-fill:#f5faf0;
+  --sf118-action-stroke:#6b8d73;
+  --sf118-action-hover:#e5f0e2;
+}
+/* Outer container is a theme-specific canvas; retain its gradient. */
+#app .dashboard-v18 .dash-hero-v16.sf13-hero{
+  border:1px solid var(--sf118-hero-stroke)!important;
+}
+/* Countdown and outcomes are equal-level panels, both with a true 1px line. */
+#app .dashboard-v18 .sf35-hero-lead .sf14-graduation.sf37-graduation,
+#app .dashboard-v18 .sf13-hero .hero-achievement.hero-outcomes.sf13-outcomes{
+  border:1px solid var(--sf118-panel-stroke)!important;
+  background:var(--sf118-panel-fill)!important;
+  border-radius:16px!important;
+  box-shadow:none!important;
+}
+/* Profile and metric cells share the same calmer second-level surface. */
+#app .dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row>div,
+#app .dashboard-v18 .sf13-hero .hero-outcome-stat{
+  border:1px solid var(--sf118-item-stroke)!important;
+  background:var(--sf118-item-fill)!important;
+  border-radius:10px!important;
+  box-shadow:none!important;
+  transition:none!important;
+}
+/* Remove the mismatched inner divider color. */
+#app .dashboard-v18 .sf13-hero .sf37-grad-footer{
+  border-top:1px solid var(--sf118-item-stroke)!important;
+}
+/* The three hero actions use the same control border and fill.
+ * Keyboard focus retains its separate 2–3px accessible outline. */
+#app .dashboard-v18 .sf13-hero :is(.sf13-profile-link,.sf14-grad-edit),
+#app .dashboard-v18 .sf13-hero .hero-outcomes>button{
+  border:1px solid var(--sf118-action-stroke)!important;
+  background:var(--sf118-action-fill)!important;
+  border-radius:10px!important;
+  box-shadow:none!important;
+}
+#app .dashboard-v18 .sf13-hero :is(.sf13-profile-link,.sf14-grad-edit):hover,
+#app .dashboard-v18 .sf13-hero .hero-outcomes>button:hover{
+  background:var(--sf118-action-hover)!important;
+  border-color:var(--sf118-action-stroke)!important;
+}
+/* Prior comfort-mode overrides carry higher specificity. Override them only
+ * for the same visual tokens; the stronger readable text remains untouched. */
+:root[data-sf-mode='eye'] #app .dashboard-v18 .sf35-hero-lead .sf14-graduation.sf37-graduation,
+:root[data-sf-mode='eye'] #app .dashboard-v18 .sf13-hero .hero-achievement.hero-outcomes.sf13-outcomes{
+  border:1px solid var(--sf118-panel-stroke)!important;
+  background:var(--sf118-panel-fill)!important;
+}
+:root[data-sf-mode='eye'] #app .dashboard-v18 .sf35-identity .dash-profile-info.profile-five-layout.sf36-profile-row>div,
+:root[data-sf-mode='eye'] #app .dashboard-v18 .sf13-hero .hero-outcome-stat{
+  border:1px solid var(--sf118-item-stroke)!important;
+  border-color:var(--sf118-item-stroke)!important;
+  background:var(--sf118-item-fill)!important;
+}
+:root[data-sf-mode='eye'] #app .dashboard-v18 .sf13-hero :is(.sf13-profile-link,.sf14-grad-edit),
+:root[data-sf-mode='eye'] #app .dashboard-v18 .sf13-hero .hero-outcomes>button{
+  border:1px solid var(--sf118-action-stroke)!important;
+  background:var(--sf118-action-fill)!important;
+}
+
+/* ScholarFlow 2026.11.11: one collision-free floating feedback lane.
+   Cloud status lives on the bottom edge; transient notices stack above it.
+   The selectors are presentation-only and do not affect cloud status logic. */
+@media (min-width:651px) {
+  body:has(.sf-cloud-dock) > .sf-joy-toast,
+  body:has(.sf-cloud-dock) > .toast {
+    bottom:calc(82px + env(safe-area-inset-bottom));
+    right:max(18px, env(safe-area-inset-right));
+  }
+  body:has(> .toast) > .sf-joy-toast {
+    bottom:calc(176px + env(safe-area-inset-bottom));
+  }
+}
+@media (max-width:650px) {
+  /* Keep notices above the bottom navigation, even without cloud SDK. */
+  body > .sf-joy-toast {
+    left:12px;
+    right:12px;
+    bottom:calc(88px + env(safe-area-inset-bottom));
+    width:auto;
+    max-width:none;
+    padding:11px 13px;
+  }
+  body:has(.sf-cloud-dock) > .sf-joy-toast,
+  body:has(.sf-cloud-dock) > .toast {
+    bottom:calc(146px + env(safe-area-inset-bottom));
+  }
+  body:has(> .toast) > .sf-joy-toast {
+    bottom:calc(240px + env(safe-area-inset-bottom));
+  }
+}
+/* Dialogs and the mobile navigation take precedence over optional messages. */
+body.sf-cloud-dialog-open > .sf-joy-toast,
+body:has(.sf-cloud-backdrop:not([hidden])) > .sf-joy-toast {
+  visibility:hidden;
+}

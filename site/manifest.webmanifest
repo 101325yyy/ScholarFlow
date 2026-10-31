@@ -1,0 +1,5 @@
+{
+  "id":"./", "name":"ScholarFlow · 科研工作台", "short_name":"ScholarFlow", "lang":"zh-CN", "start_url":"./", "scope":"./", "display":"standalone", "background_color":"#f2f6fb", "theme_color":"#1767bc",
+  "description":"可离线打开的个人科研工作台，管理文献、实验、任务与论文记录。",
+  "icons":[{"src":"./assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"./assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+}

@@ -11,7 +11,8 @@
     "test:browser": "python tests/test-v110-browser.py",
     "test:pdf": "node tests/test-v110-pdf.js",
     "test:companion": "python tests/test-v110-companion.py",
-    "test:hero-contrast": "python tests/test-v110-eye-hero-contrast.py"
+    "test:hero-contrast": "python tests/test-v110-eye-hero-contrast.py",
+    "test:research-suite": "python tests/test-research-suite.py"
   },
   "devDependencies": {
     "electron": "^38.0.0",
@@ -30,7 +31,12 @@
       "windows/main.cjs",
       "pdf-intelligence.js",
       "assets/**/*",
-      "windows/preload.cjs"
+      "windows/preload.cjs",
+      "research-suite.js",
+      "research-suite.css",
+      "pwa.js",
+      "sw.js",
+      "manifest.webmanifest"
     ],
     "win": {
       "target": [

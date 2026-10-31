@@ -1,0 +1,550 @@
+{
+  "name": "ScholarFlow 2026.11.4: 60 scenario loops",
+  "scenarios": 60,
+  "passed": 60,
+  "failed": 0,
+  "javascript_errors": [],
+  "failures": [],
+  "results": [
+    {
+      "round": 1,
+      "width": 320,
+      "layout": "balanced",
+      "preset": "ocean",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 2,
+      "width": 320,
+      "layout": "balanced",
+      "preset": "sage",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 3,
+      "width": 320,
+      "layout": "balanced",
+      "preset": "paper",
+      "wallpaper": "paper-lines",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 4,
+      "width": 320,
+      "layout": "dense",
+      "preset": "sage",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 5,
+      "width": 320,
+      "layout": "dense",
+      "preset": "paper",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 6,
+      "width": 320,
+      "layout": "dense",
+      "preset": "graphite",
+      "wallpaper": "stars",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 7,
+      "width": 320,
+      "layout": "reading",
+      "preset": "paper",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 8,
+      "width": 320,
+      "layout": "reading",
+      "preset": "graphite",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 9,
+      "width": 320,
+      "layout": "reading",
+      "preset": "glacier",
+      "wallpaper": "custom",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 10,
+      "width": 320,
+      "layout": "night",
+      "preset": "graphite",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 11,
+      "width": 320,
+      "layout": "night",
+      "preset": "glacier",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 12,
+      "width": 320,
+      "layout": "night",
+      "preset": "lavender",
+      "wallpaper": "none",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 13,
+      "width": 390,
+      "layout": "balanced",
+      "preset": "graphite",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 14,
+      "width": 390,
+      "layout": "balanced",
+      "preset": "glacier",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 15,
+      "width": 390,
+      "layout": "balanced",
+      "preset": "lavender",
+      "wallpaper": "stars",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 16,
+      "width": 390,
+      "layout": "dense",
+      "preset": "glacier",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 17,
+      "width": 390,
+      "layout": "dense",
+      "preset": "lavender",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 18,
+      "width": 390,
+      "layout": "dense",
+      "preset": "ocean",
+      "wallpaper": "custom",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 19,
+      "width": 390,
+      "layout": "reading",
+      "preset": "lavender",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 20,
+      "width": 390,
+      "layout": "reading",
+      "preset": "ocean",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 21,
+      "width": 390,
+      "layout": "reading",
+      "preset": "sage",
+      "wallpaper": "none",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 22,
+      "width": 390,
+      "layout": "night",
+      "preset": "ocean",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 23,
+      "width": 390,
+      "layout": "night",
+      "preset": "sage",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 24,
+      "width": 390,
+      "layout": "night",
+      "preset": "paper",
+      "wallpaper": "mist",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 25,
+      "width": 768,
+      "layout": "balanced",
+      "preset": "ocean",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 26,
+      "width": 768,
+      "layout": "balanced",
+      "preset": "sage",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 27,
+      "width": 768,
+      "layout": "balanced",
+      "preset": "paper",
+      "wallpaper": "custom",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 28,
+      "width": 768,
+      "layout": "dense",
+      "preset": "sage",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 29,
+      "width": 768,
+      "layout": "dense",
+      "preset": "paper",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 30,
+      "width": 768,
+      "layout": "dense",
+      "preset": "graphite",
+      "wallpaper": "none",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 31,
+      "width": 768,
+      "layout": "reading",
+      "preset": "paper",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 32,
+      "width": 768,
+      "layout": "reading",
+      "preset": "graphite",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 33,
+      "width": 768,
+      "layout": "reading",
+      "preset": "glacier",
+      "wallpaper": "mist",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 34,
+      "width": 768,
+      "layout": "night",
+      "preset": "graphite",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 35,
+      "width": 768,
+      "layout": "night",
+      "preset": "glacier",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 36,
+      "width": 768,
+      "layout": "night",
+      "preset": "lavender",
+      "wallpaper": "paper-lines",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 37,
+      "width": 1280,
+      "layout": "balanced",
+      "preset": "graphite",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 38,
+      "width": 1280,
+      "layout": "balanced",
+      "preset": "glacier",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 39,
+      "width": 1280,
+      "layout": "balanced",
+      "preset": "lavender",
+      "wallpaper": "none",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 40,
+      "width": 1280,
+      "layout": "dense",
+      "preset": "glacier",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 41,
+      "width": 1280,
+      "layout": "dense",
+      "preset": "lavender",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 42,
+      "width": 1280,
+      "layout": "dense",
+      "preset": "ocean",
+      "wallpaper": "mist",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 43,
+      "width": 1280,
+      "layout": "reading",
+      "preset": "lavender",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 44,
+      "width": 1280,
+      "layout": "reading",
+      "preset": "ocean",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 45,
+      "width": 1280,
+      "layout": "reading",
+      "preset": "sage",
+      "wallpaper": "paper-lines",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 46,
+      "width": 1280,
+      "layout": "night",
+      "preset": "ocean",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 47,
+      "width": 1280,
+      "layout": "night",
+      "preset": "sage",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 48,
+      "width": 1280,
+      "layout": "night",
+      "preset": "paper",
+      "wallpaper": "stars",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 49,
+      "width": 1600,
+      "layout": "balanced",
+      "preset": "ocean",
+      "wallpaper": "custom",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 50,
+      "width": 1600,
+      "layout": "balanced",
+      "preset": "sage",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 51,
+      "width": 1600,
+      "layout": "balanced",
+      "preset": "paper",
+      "wallpaper": "mist",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 52,
+      "width": 1600,
+      "layout": "dense",
+      "preset": "sage",
+      "wallpaper": "none",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 53,
+      "width": 1600,
+      "layout": "dense",
+      "preset": "paper",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 54,
+      "width": 1600,
+      "layout": "dense",
+      "preset": "graphite",
+      "wallpaper": "paper-lines",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 55,
+      "width": 1600,
+      "layout": "reading",
+      "preset": "paper",
+      "wallpaper": "mist",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 56,
+      "width": 1600,
+      "layout": "reading",
+      "preset": "graphite",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 57,
+      "width": 1600,
+      "layout": "reading",
+      "preset": "glacier",
+      "wallpaper": "stars",
+      "eye": "eye",
+      "pass": true
+    },
+    {
+      "round": 58,
+      "width": 1600,
+      "layout": "night",
+      "preset": "graphite",
+      "wallpaper": "paper-lines",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 59,
+      "width": 1600,
+      "layout": "night",
+      "preset": "glacier",
+      "wallpaper": "stars",
+      "eye": "standard",
+      "pass": true
+    },
+    {
+      "round": 60,
+      "width": 1600,
+      "layout": "night",
+      "preset": "lavender",
+      "wallpaper": "custom",
+      "eye": "eye",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+test-workbuddy-otp-session-race.py: 0, 15.3s: PASS OTP challenge survival 96 assertions / 16 independent scenarios
+
+test-workbuddy-otp-countdown.py: 1, 2.4s: Traceback (most recent call last):
+  File "/mnt/data/ScholarFlow-2026.11.15-OTP-Session-Fix-Full-Source/tests/test-workbuddy-otp-countdown.py", line 32, in <module>
+    assert '验证码已发送' in status.inner_text();checks+=1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+test-workbuddy-otp.py: 0, 2.3s: PASS WorkBuddy OTP mocked: challenge, countdown, verification, verified signup authenticates
+
+test-workbuddy-auth-ux.py: 0, 6.4s: PASS WorkBuddy account UI regression 95 assertions
+
+test-workbuddy-network-diagnostics.py: 0, 4.0s: PASS WorkBuddy transport error diagnostics: 46 assertions
+
+test-workbuddy-account-management.py: 0, 4.9s: PASS account-switch & logout:  84 assertions across 4 viewport widths
+
+test-workbuddy-account-layout.py: 0, 4.2s: PASS account layout: 78 checks across six widths and three themes
+
+test-workbuddy-auth-boundaries.py: 0, 2.2s: PASS Auth boundaries: reset capability absent, no fake success, no unknown-user implicit signup, local unchanged
+
+test-workbuddy-transport.py: 0, 2.3s: PASS WorkBuddy mock SDK: offline data, login, rev 1/2, conflict, logout, JS errors
+
+test-workbuddy-401.py: 0, 2.2s: PASS WorkBuddy 401 HTTP envelope not falsely retried or treated as CAS conflict
+
+test-workbuddy-pdf-offline.py: 0, 2.8s: PASS SDK PDF private upload/skip/restore; singleton factory; offline no remote write; no JS errors
+
+test-v110-pdf.js: 0, 0.0s: S DOI URL extracts
+PASS paper title normalization
+PASS layout extraction keeps line ordering
+PASS title uses size & line continuation
+PASS embedded title and DOI from PDF bytes
+PASS metadata derives journal from first page
+PASS DOI-based Crossref enrichment
+PASS network failure preserves null result
+PASS PDF.js page text maps to title, journal and DOI
+PASS Scanned page falls back to OCR
+PASSED 11
+
+test-v110-browser.py: 0, 11.5s: PASS 324 current-release assertions
+
+test-v110-ui.py: 0, 14.8s: PASS 552 1.1.0 UI-only assertions
+
+test-mobile-navigation.py: 0, 7.9s: PASSED 64 / 64

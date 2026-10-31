@@ -1,0 +1,38 @@
+name: Deploy ScholarFlow online site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify static assets
+        run: |
+          python3 - <<'PY_VERIFY'
+          from pathlib import Path
+          root = Path('site')
+          for path in ['index.html','styles.css','app.js','pdf-intelligence.js','online.css','assets/graduate-bear.svg','research-suite.js','research-suite.css','pwa.js','sw.js','manifest.webmanifest','assets/icon-192.png','assets/icon-512.png']:
+              assert (root/path).is_file(), f'missing {path}'
+          body = (root/'index.html').read_text(encoding='utf-8')
+          assert './app.js' in body and './pdf-intelligence.js' in body
+          assert b'scholarflow_v1_data' in (root/'app.js').read_bytes()
+          print('Static assets verified')
+          PY_VERIFY
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./site
+      - id: deployment
+        uses: actions/deploy-pages@v4

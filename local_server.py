@@ -81,7 +81,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def _is_runtime_asset(self):
         clean=unquote(urlparse(self.path).path).lstrip('/')
-        return clean in {'','index.html','styles.css','app.js','pdf-intelligence.js','assets/graduate-bear.svg'}
+        return clean in {'','index.html','styles.css','research-suite.css','app.js','research-suite.js','pwa.js','sw.js','manifest.webmanifest','pdf-intelligence.js','assets/graduate-bear.svg','assets/icon-192.png','assets/icon-512.png'}
 
     def do_HEAD(self):
         if not self._is_runtime_asset():

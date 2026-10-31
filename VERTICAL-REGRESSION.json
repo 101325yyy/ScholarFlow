@@ -1,0 +1,181 @@
+{
+  "results": [
+    {
+      "name": "test-cloud-2026-11-2-51-rounds.py",
+      "status": "PASS",
+      "seconds": 32.3,
+      "message": "exception\n35. 1440px / planner renders without overflow, duplicate DOM ID or JS exception\n36. 1440px / papers renders without overflow, duplicate DOM ID or JS exception\n37. stale remote restore rejected at revision 1\n38. stale remote restore rejected at revision 2\n39. stale remote restore rejected at revision 4\n40. stale remote restore rejected at revision 7\n41. stale remote restore rejected at revision 15\n42. fresh verified restore at revision 3\n43. fresh verified restore at revision 9\n44. HTTP 503 retry policy (transient only)\n45. HTTP 503 retry policy (transient only)\n46. HTTP 400 retry policy (transient only)\n47. HTTP 400 retry policy (transient only)\n48. revision CAS conflict 20 blocks auto overwrite\n49. revision CAS conflict 32 blocks auto overwrite\n50. login never initiates upload or opts in to auto-sync\n51. remote update during confirmation rejected without overwriting local data"
+    },
+    {
+      "name": "test-cloud-reliability.py",
+      "status": "PASS",
+      "seconds": 15.65,
+      "message": "PASS 24 cloud reliability assertions across 12 independent iteration scenarios"
+    },
+    {
+      "name": "test-cloud-static-guards.py",
+      "status": "PASS",
+      "seconds": 0.82,
+      "message": "PASS 19 static cloud/privacy/PWA guards and all Python test files parse"
+    },
+    {
+      "name": "test-cloud-sync.py",
+      "status": "PASS",
+      "seconds": 4.5,
+      "message": "PASS 17 cloud synchronization contract assertions (mocked Supabase, real Chromium)"
+    },
+    {
+      "name": "test-cloud-workspace.py",
+      "status": "PASS",
+      "seconds": 4.8,
+      "message": "PASS 112 cloud-enabled workspace UI assertions (Chromium, 4 widths, 11 modules)"
+    },
+    {
+      "name": "test-mobile-navigation-themes.py",
+      "status": "PASS",
+      "seconds": 9.16,
+      "message": "Theme/mobile checks 110 / 110 failures []"
+    },
+    {
+      "name": "test-mobile-navigation.py",
+      "status": "PASS",
+      "seconds": 6.25,
+      "message": "PASSED 64 / 64"
+    },
+    {
+      "name": "test-research-pwa.js",
+      "status": "PASS",
+      "seconds": 0.04,
+      "message": "PASS 6 service-worker cache/security assertions"
+    },
+    {
+      "name": "test-research-suite-themes.py",
+      "status": "PASS",
+      "seconds": 8.04,
+      "message": "PASS 245 theme/responsive assertions"
+    },
+    {
+      "name": "test-research-suite.py",
+      "status": "PASS",
+      "seconds": 5.94,
+      "message": "PASS 74 research suite assertions"
+    },
+    {
+      "name": "test-ui-2026-11-3-refined.py",
+      "status": "PASS",
+      "seconds": 10.47,
+      "message": "BEGIN INTERACTION\nIME globalSearch\nIME moduleSearch\nPLANNER\nBUTTON RECT {'r': {'x': 28, 'y': 729.484375, 'width': 334, 'height': 39.09375, 'top': 729.484375, 'right': 362, 'bottom': 768.578125, 'left': 28}, 'p': {'x': 28, 'y': 554.296875, 'width': 334, 'height': 214.28125, 'top': 554.296875, 'right': 362, 'bottom': 768.578125, 'left': 28}, 'html': '<button class=\"btn\" type=\"submit\">＋ 添加计划</button>', 'scroll': 0}\nPDF\nPASS 131 UI / IME / planner / PDF tests"
+    },
+    {
+      "name": "test-v110-board-alignment.py",
+      "status": "PASS",
+      "seconds": 6.44,
+      "message": "board UI audit: 3607/3607 PASS"
+    },
+    {
+      "name": "test-v110-browser.py",
+      "status": "PASS",
+      "seconds": 8.47,
+      "message": "PASS 324 current-release assertions"
+    },
+    {
+      "name": "test-v110-companion.py",
+      "status": "PASS",
+      "seconds": 8.25,
+      "message": "PASS 83 1.1.0 companion assertions"
+    },
+    {
+      "name": "test-v110-delight.py",
+      "status": "PASS",
+      "seconds": 9.03,
+      "message": "PASS 67 joy-layer assertions"
+    },
+    {
+      "name": "test-v110-eye-hero-contrast.py",
+      "status": "PASS",
+      "seconds": 6.82,
+      "message": "Computed-style tests: 1556; failed: 0"
+    },
+    {
+      "name": "test-v110-http.py",
+      "status": "PASS",
+      "seconds": 1.53,
+      "message": "PASS 13 HTTP/API security checks Python local server"
+    },
+    {
+      "name": "test-v110-journey.py",
+      "status": "PASS",
+      "seconds": 8.21,
+      "message": "PASS 73 1.1.0 journey interaction assertions"
+    },
+    {
+      "name": "test-v110-name.py",
+      "status": "PASS",
+      "seconds": 7.73,
+      "message": "PASS 70 1.1.0 editable-name browser assertions"
+    },
+    {
+      "name": "test-v110-paper-ui.py",
+      "status": "PASS",
+      "seconds": 9.11,
+      "message": "PASS 572 1.1.0 UI acceptance assertions"
+    },
+    {
+      "name": "test-v110-pdf.js",
+      "status": "PASS",
+      "seconds": 0.06,
+      "message": "PASS DOI extracts from front page\nPASS DOI URL extracts\nPASS paper title normalization\nPASS layout extraction keeps line ordering\nPASS title uses size & line continuation\nPASS embedded title and DOI from PDF bytes\nPASS metadata derives journal from first page\nPASS DOI-based Crossref enrichment\nPASS network failure preserves null result\nPASS PDF.js page text maps to title, journal and DOI\nPASS Scanned page falls back to OCR\nPASSED 11"
+    },
+    {
+      "name": "test-v110-performance.py",
+      "status": "PASS",
+      "seconds": 3.44,
+      "message": "PERFORMANCE {\"scenario\": \"750 synthetic literature + 400 synthetic tasks; 9 module transitions; Linux Chromium; includes test command overhead\", \"samples_ms\": [510.5, 126.7, 172.0, 110.9, 114.0, 148.7, 84.6, 210.1, 135.1], \"median_ms\": 135.1, \"maximum_ms\": 510.5, \"js_errors\": [], \"limitation\": \"Single-browser, short run; not 72h, not cross-platform, not 100 concurrent users\"}"
+    },
+    {
+      "name": "test-v110-privacy.py",
+      "status": "PASS",
+      "seconds": 2.81,
+      "message": "PASS generic-first-run privacy & version smoke"
+    },
+    {
+      "name": "test-v110-quality.py",
+      "status": "PASS",
+      "seconds": 18.26,
+      "message": "PASS 168 V1.1.0 UI-quality, contrast, safety checks"
+    },
+    {
+      "name": "test-v110-theme-preview-companion.py",
+      "status": "PASS",
+      "seconds": 6.26,
+      "message": "PASS 105 theme preview and companion assertions"
+    },
+    {
+      "name": "test-v110-theme-readability.py",
+      "status": "PASS",
+      "seconds": 13.5,
+      "message": "Assertion checks: 5484 FAIL: 0"
+    },
+    {
+      "name": "test-v110-thin-eye-surfaces.py",
+      "status": "PASS",
+      "seconds": 3.97,
+      "message": "PASS 664/664 assertions; failures=0"
+    },
+    {
+      "name": "test-v110-ui.py",
+      "status": "PASS",
+      "seconds": 13.34,
+      "message": "PASS 552 1.1.0 UI-only assertions"
+    },
+    {
+      "name": "test-v110-unified-panels.py",
+      "status": "PASS",
+      "seconds": 10.41,
+      "message": "UI assertions: 3552 failures: 0"
+    }
+  ],
+  "pass": 29,
+  "failed": 0,
+  "timeouts": 0
+}

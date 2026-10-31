@@ -1,0 +1,12 @@
+# Cloudflare Pages only; GitHub Pages ignores this file.
+/index.html
+  Cache-Control: no-cache, max-age=0
+/cloud-config.js
+  Cache-Control: no-store
+/sw.js
+  Cache-Control: no-cache, max-age=0
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

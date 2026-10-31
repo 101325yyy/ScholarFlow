@@ -1,0 +1,140 @@
+/* ScholarFlow Cloud control — independent of persisted themes and research layout */
+.sf-cloud-dock{position:fixed;bottom:17px;right:17px;z-index:145;font:13px/1.55 Inter,'Microsoft YaHei','PingFang SC',system-ui,sans-serif;color:#243852}
+.sf-cloud-trigger{border:1px solid #b5c9e3;background:#eef5ff;color:#1b4d84;border-radius:999px;min-height:39px;padding:7px 14px;font-size:12px;font-weight:750;box-shadow:0 6px 24px #1734512d;cursor:pointer}
+.sf-cloud-trigger:hover{background:#dfeeff}
+.sf-cloud-panel{position:absolute;right:0;bottom:49px;width:min(420px,calc(100vw - 20px));max-height:min(72vh,650px);overflow:auto;background:#fff;border:1px solid #cedded;border-radius:16px;box-shadow:0 16px 45px #19324d3b;color:#243852}
+.sf-cloud-panel[hidden]{display:none}
+.sf-cloud-header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid #e5ecf5}
+.sf-cloud-header strong{font-size:15px}
+.sf-cloud-header button{border:0;background:#eef2f6;width:30px;height:30px;font-size:20px;border-radius:8px;cursor:pointer}
+.sf-cloud-body{padding:16px}.sf-cloud-hint,.sf-cloud-warning{margin:0 0 13px;color:#536985;line-height:1.7}.sf-cloud-warning{border:1px solid #e3d4b9;background:#fff8ec;border-radius:10px;padding:10px}
+.sf-cloud-login{display:grid;gap:11px}.sf-cloud-login label{display:grid;gap:5px;font-weight:650;color:#425c79}
+.sf-cloud-login input{min-height:38px;border:1px solid #bfcfe1;border-radius:9px;padding:8px 10px;width:100%;font:inherit;color:#213752;background:white}
+.sf-cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.sf-cloud-actions button{background:#f1f5fb;color:#1e4f85;border:1px solid #d2dfec;border-radius:9px;padding:8px 11px;min-height:36px;cursor:pointer;font-size:12px;font-weight:650}
+.sf-cloud-actions .sf-cloud-primary{background:#1768bb;border-color:#1768bb;color:#fff}
+.sf-cloud-actions button:disabled{opacity:.5;cursor:wait}
+.sf-cloud-message{margin:12px 0 0;font-size:12px;color:#315d80;white-space:pre-wrap;overflow-wrap:anywhere}
+.sf-cloud-error{color:#a02e3d}
+.sf-cloud-account{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px}
+.sf-cloud-account strong{overflow-wrap:anywhere;color:#15334e}
+.sf-cloud-account span{color:#6d8397}
+.sf-cloud-compare{padding:10px;border-radius:9px;background:#f1f6fc;font-size:12px}
+.sf-cloud-checkbox{display:flex;gap:8px;align-items:start;margin:12px 0;line-height:1.6;font-weight:650}
+.sf-cloud-checkbox input{margin-top:4px;accent-color:#1768bb;flex:none}
+.sf-cloud-panel :is(button,input):focus-visible,.sf-cloud-trigger:focus-visible{outline:3px solid #2271c2;outline-offset:2px}
+:root[data-sf-mode='eye'] .sf-cloud-panel,:root[data-sf-mode='eye'] .sf-cloud-trigger{background:#f6f9f1;color:#294a37;border-color:#acbda9}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-panel,:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-trigger{background:#1f344d;color:#edf5ff;border-color:#526c88}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account strong{color:#fff}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-hint{color:#c2d4e8}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-compare{background:#30475f}
+@media(max-width:650px){.sf-cloud-dock{right:9px;bottom:10px}.sf-cloud-panel{bottom:45px;max-height:75vh}}
+@media print{.sf-cloud-dock{display:none}}
+
+/* Cloud 2026.11.1: status clarity and mobile bottom-nav collision avoidance. */
+.sf-cloud-connectivity{margin:10px 0;padding:8px 11px;background:#edf5fb;border:1px solid #d6e4ef;border-radius:9px;color:#284c6e;font-size:12px}
+.sf-cloud-files{margin:15px 0;border-top:1px solid #e0e9f3;padding-top:12px}
+.sf-cloud-files>strong{font-size:13px;color:inherit}
+.sf-cloud-files>p{font-size:12px;color:#61778a;line-height:1.6;margin:7px 0}
+:root[data-sf-mode='eye'] .sf-cloud-connectivity{background:#e8efe6;color:#2c513b;border-color:#b5cbb8}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-connectivity{background:#30475f;color:#d9e7f6;border-color:#536b84}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-files>p{color:#c2d4e8}
+:root.sf-drawer-open .sf-cloud-dock{visibility:hidden;pointer-events:none}
+@media(max-width:650px){
+ .sf-cloud-dock{right:10px;bottom:calc(78px + env(safe-area-inset-bottom))}
+ .sf-cloud-panel{bottom:49px;max-height:min(67dvh,620px)}
+ .sf-cloud-trigger{min-height:40px;padding:8px 12px}
+ .sf-cloud-actions button{min-height:42px}
+ .sf-cloud-header button{width:40px;height:40px}
+}
+
+/* 2026.11.9: accessible, separate sign-in / registration / password recovery */
+.sf-cloud-auth-tabs,.sf-cloud-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:12px 0;padding:5px;border:1px solid #dbe5ef;border-radius:12px;background:#f3f7fc}
+.sf-cloud-auth-tabs button,.sf-cloud-methods button{min-height:44px;border:1px solid transparent;border-radius:9px;background:transparent;color:#4b6683;font-weight:650;font-size:13px;cursor:pointer}
+.sf-cloud-auth-tabs button.is-selected,.sf-cloud-methods button.is-selected{background:#fff;border-color:#bbd1e5;color:#175482;box-shadow:0 2px 7px #1a3d6415}
+.sf-cloud-methods{background:transparent;border:0;padding:0;margin:14px 0 16px}
+.sf-cloud-auth-back{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px}
+.sf-cloud-auth-back strong{font-size:15px}
+.sf-cloud-auth-back button,.sf-cloud-link{border:0;background:transparent;color:#1768bb;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px;padding:10px 4px}
+.sf-cloud-login{gap:13px}
+.sf-cloud-login input{min-height:44px}
+.sf-cloud-login button[type=button]:not(.sf-cloud-link){min-height:44px;border:1px solid #cadbeb;border-radius:9px;background:#f1f6fb;color:#175482;font-weight:650;cursor:pointer}
+.sf-cloud-login .sf-cloud-submit{width:100%;min-height:46px;border:1px solid #1768bb;border-radius:10px;background:#1768bb;color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.sf-cloud-login button:disabled{opacity:.5;cursor:wait}
+.sf-cloud-probe{margin:15px 0 0;padding-top:10px;border-top:1px solid #e5ecf5}
+.sf-cloud-probe button{min-height:38px}
+.sf-cloud-panel :is(button,input):focus-visible{outline:2px solid #1580b4;outline-offset:2px}
+:root[data-sf-mode='eye'] .sf-cloud-auth-tabs,:root[data-sf-mode='eye'] .sf-cloud-methods{background:#eaf0e7;border-color:#adbfac}
+:root[data-sf-mode='eye'] .sf-cloud-auth-tabs button.is-selected,:root[data-sf-mode='eye'] .sf-cloud-methods button.is-selected{background:#fffdf6;color:#244c37;border-color:#afc5aa}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-auth-tabs,:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-methods{background:#283f59;border-color:#4d6783}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-auth-tabs button,:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-methods button{color:#c7d8eb}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-auth-tabs button.is-selected,:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-methods button.is-selected{background:#3c5773;color:#fff;border-color:#6b8ba8}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-login label{color:#dae5f2}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-login input{background:#263d54;color:#fff;border-color:#59738c}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-login button[type=button]:not(.sf-cloud-link){background:#3d5570;color:#f3f8ff;border-color:#687f97}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-auth-back button,:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-link{color:#b7dcff}
+@media(max-width:650px){.sf-cloud-panel{width:min(420px,calc(100vw - 20px))}.sf-cloud-body{padding:14px}.sf-cloud-auth-tabs button,.sf-cloud-methods button{min-height:44px}}
+@media(max-width:650px){
+ .sf-cloud-panel{max-height:min(calc(100dvh - 154px),780px);overscroll-behavior:contain}
+ .sf-cloud-login .sf-cloud-submit{position:relative}
+}
+
+/* 2026.11.10: cloud dialog backdrop and pointer-safe page focus boundary. */
+.sf-cloud-backdrop{position:fixed;inset:0;z-index:144;background:rgba(17,34,54,.36);backdrop-filter:blur(2px)}
+.sf-cloud-backdrop[hidden]{display:none!important}
+body.sf-cloud-dialog-open{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.sf-cloud-backdrop{backdrop-filter:none}}
+
+/* 2026.11.12 Account actions: clear identity, guarded switching, theme-safe UI. */
+.sf-cloud-identity{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid #d7e3ee;border-radius:12px;background:#f5f9fd;min-width:0}
+.sf-cloud-avatar{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:#dfeaf9;color:#215a92;font-weight:800;font-size:17px}
+.sf-cloud-identity-text{flex:1;display:grid;gap:2px;min-width:0}
+.sf-cloud-identity-label{font-size:11px;color:#62788d;font-weight:600}
+.sf-cloud-identity-text strong{color:#1a3858;font-size:13px;overflow-wrap:anywhere;word-break:break-word;line-height:1.4}
+.sf-cloud-identity-text small{color:#61768b;font-size:11px}
+.sf-cloud-signed-in{color:#26634e;background:#e2f4eb;border:1px solid #c5e7d5;border-radius:99px;font-size:11px;padding:2px 8px;white-space:nowrap;align-self:flex-start}
+.sf-cloud-account-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0 14px}
+.sf-cloud-account-actions button{min-height:43px;padding:9px 12px;border:1px solid #cbdced;border-radius:10px;background:#fff;color:#245885;font-size:13px;font-weight:700;cursor:pointer}
+.sf-cloud-account-actions button[data-cloud='logout']{color:#80515a;border-color:#e7d4d7;background:#fff9fa}
+.sf-cloud-account-actions button:hover{background:#eaf3fd}
+.sf-cloud-account-actions button:disabled{cursor:wait;opacity:.6}
+.sf-cloud-account-warning{display:grid;gap:6px;padding:12px;margin:12px 0;border:1px solid #d7c79c;border-radius:11px;background:#fff9e9;color:#684e25;line-height:1.65;font-size:12px}
+.sf-cloud-account-warning strong{font-size:12px}
+.sf-cloud-account-warning span{overflow-wrap:anywhere}
+.sf-cloud-account-warning button{justify-self:start;min-height:38px;padding:6px 12px;background:#fff;border:1px solid #b9a679;border-radius:9px;font-size:12px;font-weight:700;color:#664b25;cursor:pointer}
+.sf-cloud-account-warning button:disabled{opacity:.55;cursor:not-allowed}
+:root[data-sf-mode='eye'] .sf-cloud-identity{background:#eef5ea;border-color:#bccfb8}
+:root[data-sf-mode='eye'] .sf-cloud-avatar{background:#d9e9d6;color:#2d5b3a}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-identity{background:#293f59;border-color:#59728d}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-avatar{background:#3c5a7b;color:#f1f8ff}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-identity-text :is(strong,small,.sf-cloud-identity-label){color:#e5f0ff}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-actions button{background:#2b4662;color:#e8f4ff;border-color:#597590}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-actions button[data-cloud='logout']{color:#ffd8da;border-color:#8b606d}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-warning{background:#493e2c;color:#ffe6b4;border-color:#8d7454}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-account-warning button{background:#4c402d;border-color:#b99e71;color:#fff2dc}
+@media(max-width:380px){.sf-cloud-identity{flex-wrap:wrap}.sf-cloud-signed-in{margin-left:51px}.sf-cloud-account-actions{gap:7px}}
+
+/* 2026.11.13: optional, non-secret network diagnostics; keep auth layout intact. */
+.sf-cloud-diagnostics{margin:12px 0 0;padding:10px 12px;border:1px solid #d3deeb;border-radius:10px;background:#f6f9fd;color:#38516c;font-size:12px;overflow-wrap:anywhere}
+.sf-cloud-diagnostics summary{font-weight:700;cursor:pointer;min-height:28px}
+.sf-cloud-diagnostics dl{display:grid;grid-template-columns:minmax(80px,110px) minmax(0,1fr);gap:5px 8px;margin:12px 0}
+.sf-cloud-diagnostics dt{font-weight:700;color:#4b6580}
+.sf-cloud-diagnostics dd{margin:0;overflow-wrap:anywhere}
+.sf-cloud-diagnostics p{margin:10px 0;line-height:1.65}
+.sf-cloud-diagnostics button{border:1px solid #c0d2e5;border-radius:8px;background:#fff;color:#234b75;padding:8px 10px;cursor:pointer;min-height:35px}
+.sf-cloud-diagnostics button:focus-visible{outline:2px solid #2582bd;outline-offset:2px}
+
+/* 2026.11.14: clearly visible OTP resend countdown, with no false "sent" state on network errors. */
+.sf-cloud-code-control{display:grid;gap:7px;min-width:0}
+.sf-cloud-code-control>button{width:100%}
+.sf-cloud-code-status{margin:0;padding:8px 11px;border-radius:9px;border:1px solid #dbe6f1;background:#f5f9fd;color:#4b647c;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.sf-cloud-code-status[data-state='waiting']{background:#eaf4ff;border-color:#c4dff5;color:#175b8d;font-weight:650}
+.sf-cloud-code-status[data-state='ready']{background:#edf7ef;border-color:#cde4d4;color:#286249}
+:root[data-sf-mode='eye'] .sf-cloud-code-status{background:#eff5e9;border-color:#b9d1b3;color:#33583e}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-code-status{background:#2a4560;border-color:#55738b;color:#e4eefb}
+:root[data-sf-layout='night']:not([data-sf-mode='eye']) .sf-cloud-code-status[data-state='waiting']{background:#214d70;color:#e3f4ff}
+@media(max-width:650px){.sf-cloud-code-status{font-size:12px;padding:8px 10px}}
+
+/* OTP requests that did not yield a verifiable SDK challenge */
+.sf-cloud-code-status[data-state="unconfirmed"]{background:#fff4ed;border-color:#eab9a9;color:#963c23}
+:root[data-sf-layout="night"] .sf-cloud-code-status[data-state="unconfirmed"]{background:#59352d;border-color:#b66d59;color:#fff1e9}

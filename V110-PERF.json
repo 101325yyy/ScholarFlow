@@ -1,18 +1,18 @@
 {
   "scenario": "750 synthetic literature + 400 synthetic tasks; 9 module transitions; Linux Chromium; includes test command overhead",
   "samples_ms": [
-    538.0,
-    251.8,
-    179.3,
-    68.0,
-    119.9,
-    160.2,
-    49.3,
-    243.9,
-    129.2
+    510.5,
+    126.7,
+    172.0,
+    110.9,
+    114.0,
+    148.7,
+    84.6,
+    210.1,
+    135.1
   ],
-  "median_ms": 160.2,
-  "maximum_ms": 538.0,
+  "median_ms": 135.1,
+  "maximum_ms": 510.5,
   "js_errors": [],
   "limitation": "Single-browser, short run; not 72h, not cross-platform, not 100 concurrent users"
 }

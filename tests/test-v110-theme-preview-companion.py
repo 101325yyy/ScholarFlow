@@ -24,21 +24,22 @@ with sync_playwright() as pw:
     page.add_script_tag(path=str(R/'pdf-intelligence.js'))
     page.add_script_tag(path=str(R/'app.js'))
     page.locator('nav [data-nav="settings"]').first.dispatch_event('click')
-    check(page.locator('.style-preset-card').count()==6,'six distinct choices rendered')
+    check(page.locator('select[name="stylePreset"] option').count()==6,'six distinct palette options rendered')
     for preset in PALETTES:
-        check(page.locator(f'.preset-{preset} .preset-sample i').count()==3,f'{preset}: three actual palette swatches')
-    # All sample colors stay true even when another global theme is active.
+        check(page.locator(f'select[name="stylePreset"] option[value="{preset}"]').count()==1,f'{preset}: native select option available')
+    # Each selected option uses its genuine palette color, independent of active theme.
     for active in PALETTES:
         page.evaluate('(active)=>document.documentElement.dataset.sfPreset=active',active)
         for eye in ('standard','eye'):
             page.evaluate('(eye)=>document.documentElement.dataset.sfMode=eye',eye)
-            actual=page.evaluate('''() => Object.fromEntries([...document.querySelectorAll('.style-preset-card')].map(e=>[e.querySelector('input').value,getComputedStyle(e.querySelector('.preset-sample i:first-child')).backgroundColor]))''')
             for k,h in PALETTES.items():
+                page.locator('select[name="stylePreset"]').select_option(k)
+                actual=page.evaluate('getComputedStyle(document.getElementById("stylePresetPreview")).backgroundImage')
                 rgb=tuple(int(h[i:i+2],16) for i in (1,3,5))
-                check(actual[k] == f'rgb({rgb[0]}, {rgb[1]}, {rgb[2]})',f'{active}/{eye}: {k} matches own label {actual[k]}')
+                check(f'rgb({rgb[0]}, {rgb[1]}, {rgb[2]})' in actual,f'{active}/{eye}: {k} swatch matches palette')
     page.evaluate("() => {document.documentElement.dataset.sfPreset='ocean';document.documentElement.dataset.sfMode='standard'}")
     old=page.evaluate('window.__store.get("scholarflow_v1_data")')
-    page.locator('.preset-lavender input').check(force=True)
+    page.locator('select[name="stylePreset"]').select_option('lavender')
     check('实验室紫' in page.locator('#stylePresetFeedback').inner_text(),'live, truthful selection message')
     check(page.locator('#setting_theme').input_value()=='auto','palette selection switches accent control to auto')
     check(page.evaluate('window.__store.get("scholarflow_v1_data")')==old,'selection is not saved before submitting')
@@ -62,7 +63,7 @@ with sync_playwright() as pw:
         page.set_viewport_size({'width':width,'height':850})
         page.locator('nav [data-nav="settings"]').first.dispatch_event('click')
         check(page.evaluate('document.documentElement.scrollWidth <= innerWidth+2'),f'{width} settings no page overflow')
-        check(page.locator('.preset-lavender .preset-sample').is_visible(),f'{width} all palette cards functional')
+        check(page.locator('#stylePresetPreview').is_visible(),f'{width} all palette cards functional')
         page.locator('nav [data-nav="home"]').first.dispatch_event('click')
         check(page.evaluate('document.documentElement.scrollWidth <= innerWidth+2'),f'{width} dashboard no overflow')
     check(not errs,f'page errors: {errs}')

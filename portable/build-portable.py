@@ -3,7 +3,7 @@ from pathlib import Path
 import subprocess,shutil,os
 root=Path(__file__).resolve().parents[1]
 pkg=root/'portable'; static=pkg/'static'; static.mkdir(exist_ok=True)
-for name in ('index.html','app.js','styles.css','pdf-intelligence.js'):shutil.copyfile(root/name,static/name)
+for name in ('index.html','app.js','styles.css','research-suite.js','research-suite.css','pwa.js','sw.js','manifest.webmanifest','pdf-intelligence.js'):shutil.copyfile(root/name,static/name)
 shutil.copytree(root/'assets',static/'assets',dirs_exist_ok=True)
 out=root/'release';out.mkdir(exist_ok=True)
 for system,arch,name in [('windows','amd64','ScholarFlow-Windows-x64.exe')]:
